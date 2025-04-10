@@ -27,13 +27,13 @@ class ImportCardCommand extends Command
         private readonly EntityManagerInterface $entityManager,
         private readonly LoggerInterface        $logger,
         private array                           $csvHeader = []
-    )
-    {
+    ) {
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    {   
+        $this->logger->info('Starting import');
         ini_set('memory_limit', '2G');
         // On récupère le temps actuel
         $io = new SymfonyStyle($input, $output);
@@ -46,12 +46,13 @@ class ImportCardCommand extends Command
         $this->logger->info('Importing cards from ' . $filepath);
         if ($handle === false) {
             $io->error('File not found');
+            $this->logger->error('File not found');
             return Command::FAILURE;
         }
 
         $i = 0;
         $this->csvHeader = fgetcsv($handle);
-        $uuidInDatabase = $this->entityManager->getRepository(Card::class)->getAllUuids();
+        // $uuidInDatabase = $this->entityManager->getRepository(Card::class)->getAllUuids();
 
         $progressIndicator = new ProgressIndicator($output);
         $progressIndicator->start('Importing cards...');
@@ -59,15 +60,25 @@ class ImportCardCommand extends Command
         while (($row = $this->readCSV($handle)) !== false) {
             $i++;
 
-            if (!in_array($row['uuid'], $uuidInDatabase)) {
+            // if (!in_array($row['uuid'], $uuidInDatabase)) {
+            //     $this->addCard($row);
+            // }
+
+            $existingCard = $this->entityManager->getRepository(Card::class)->findOneBy(['uuid' => $row['uuid']]);
+            if (!$existingCard) {
                 $this->addCard($row);
             }
 
-            if ($i % 2000 === 0) {
+
+            if ($i % 5000 === 0) {
                 $this->entityManager->flush();
                 $this->entityManager->clear();
                 $progressIndicator->advance();
             }
+
+            // if ($i >= 30000) {
+            //     break;
+            // }
         }
         // Toujours flush en sorti de boucle
         $this->entityManager->flush();
@@ -79,6 +90,8 @@ class ImportCardCommand extends Command
         $end = microtime(true);
         $timeElapsed = $end - $start;
         $io->success(sprintf('Imported %d cards in %.2f seconds', $i, $timeElapsed));
+        $this->logger->info(sprintf('Imported %d cards in %.2f seconds', $i, $timeElapsed));
+        $this->logger->info('Import done');
         return Command::SUCCESS;
     }
 
@@ -106,6 +119,5 @@ class ImportCardCommand extends Command
         $card->setText($row['text']);
         $card->setType($row['type']);
         $this->entityManager->persist($card);
-
     }
 }

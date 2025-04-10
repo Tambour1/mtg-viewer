@@ -17,8 +17,8 @@ Aide qui peut être utile:
 - Pour accéder au profiler: [http://localhost/_profiler](http://localhost/_profiler) (adapter l'URL si besoin)
 
 ## 1. Ajout de logs 
-- Ajouter des logs pour chaque appel à l'API
-- Ajouter des logs pour le début, la fin, la durée et les erreurs de l'import
+- [x] Ajouter des logs pour chaque appel à l'API
+- [x] Ajouter des logs pour le début, la fin, la durée et les erreurs de l'import
 
 ## 2. Ajouter la recherche de carte
 Si vous parcourez le site, vous verez le listing de toutes les cartes, et l'affichage d'une carte en particulier.  
