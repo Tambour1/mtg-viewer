@@ -30,8 +30,8 @@ Consigne:
 - [x] La recherche se lance à partir de 3 caractères, automatiquement
 
 ## 3. Ajouter des filtres
-Ajouter un fitlre sur le setCode pour la recherche de carte et le listing de carte.  
-Pensez à faire une route qui liste tous les setCode disponible pour les afficher dans un select. (documentation OpenAPI, etc.)
+- [x] Ajouter un fitlre sur le setCode pour la recherche de carte et le listing de carte.  
+- [x] Pensez à faire une route qui liste tous les setCode disponible pour les afficher dans un select. (documentation OpenAPI, etc.)
 
 ## 4. Ajouter la pagination
 Vous avez réussi a importer +30,000 cartes, super ! La page de listing de carte est maintenant très lente.
