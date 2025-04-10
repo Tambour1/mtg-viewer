@@ -24,10 +24,10 @@ Aide qui peut être utile:
 Si vous parcourez le site, vous verez le listing de toutes les cartes, et l'affichage d'une carte en particulier.  
 Il y a une page en TODO, qui est la recherche de carte. Créer cette page et les API necessaires.  
 Consigne: 
-- La recherche se fait sur le nom de la carte
-- L'API utiliser doit être documentée via OpenAPI (Swagger)
-- N'afficher que les 20 premiers résultats
-- La recherche se lance à partir de 3 caractères, automatiquement
+- [x] La recherche se fait sur le nom de la carte
+- [x] L'API utiliser doit être documentée via OpenAPI (Swagger)
+- [x] N'afficher que les 20 premiers résultats
+- [x] La recherche se lance à partir de 3 caractères, automatiquement
 
 ## 3. Ajouter des filtres
 Ajouter un fitlre sur le setCode pour la recherche de carte et le listing de carte.  
